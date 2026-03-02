@@ -183,7 +183,7 @@ class DeclarePeerType {
 
 
 
-import {ANSWER_ERROR, ANSWER_ERROR_URL,CAMERA_ERROR_MSG,CAMERA_ERROR_Permission,CAMERA_ERROR_Permission_URL, CAMERA_ERROR_URL, ESTABLISH_ERORR,  ESTABLISH_ERROR_URL, PASS_VIDEO_REF_ERROR_URL} from './ErrorMesage.js';
+import {ANSWER_ERROR, ANSWER_ERROR_URL,CAMERA_ERROR_MSG,CAMERA_ERROR_Permission,CAMERA_ERROR_Permission_URL, CAMERA_ERROR_URL, ESTABLISH_ERORR,  ESTABLISH_ERROR_URL, JSON__ERROR, JSON__ERROR__URL, PASS_VIDEO_REF_ERROR_URL} from './ErrorMesage.js';
  
  
  
@@ -198,8 +198,19 @@ function throwSexyError(message,url,bg="#1A0D3F",color="#00CED1",linkbg="#1A0D3F
   );
 }
 
-function code(params){return JSON.stringify(params)}
-function uncode(parmas){return JSON.parse(parmas)}
+function code(params){
+    if(!parmas){
+        throwSexyError(JSON__ERROR,JSON__ERROR__URL)
+        return
+    }
+    return JSON.stringify(params)
+}
+function uncode(parmas){
+    if(!parmas){
+          throwSexyError(JSON__ERROR,JSON__ERROR__URL)
+          return 
+    }
+    return JSON.parse(parmas)}
 
 
  
@@ -438,12 +449,13 @@ async establishConnection(setRemoteAnswer)  {
 async handleRemoteIceCandidate(data){
     try {
        if(!data || data==undefined || data==null){
-        throwSexyError("ice candindate null you pass it","https://doct/nullice")
+        throwSexyError(Remote_ICE_ERROR,Remote_ICE_ERROR_URL)
         return 
        }
+     
 
-       if(!this.peer.setRemoteDescription){
-        throwSexyError("the remote description still no here please check the dock to understand","https://doc/failedtoSetRemoteDescription")
+       if(!this.peer.remoteDescription){
+         throwSexyError(Remote_ICE_ERROR,Remote_ICE_ERROR_URL)
 
        }
         await this.peer.addIceCandidate(new RTCIceCandidate(data));
