@@ -235,7 +235,7 @@ class PeerSetup {
   
 }
 
-SotreIce(ice){
+StoreIce(ice){
     this.buffer.push(ice)
 
 }
@@ -472,6 +472,7 @@ async handleRemoteIceCandidate(data){
 }
 
 export {PeerSetup,code,uncode}
+
 
 
 
